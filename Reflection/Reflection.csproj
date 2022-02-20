@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Kontore.Reflection</RootNamespace>
+    <AssemblyName>Kontore.Reflection</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>tigerros</Authors>
+    <Company>Kontore</Company>
+	<PackageIconUrl></PackageIconUrl>
+	<Description>Helper framework for C# reflection.</Description>
+	<RepositoryUrl>https://github.com/Kontore/Reflection</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageProjectUrl>https://github.com/Kontore/Reflection</PackageProjectUrl>
+	<NeutralLanguage>en</NeutralLanguage>
+	<PackageIcon>StralsundCityHall_512x512.jpg</PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+     <Optimize>true</Optimize>
+	 <GenerateDocumentationFile>true</GenerateDocumentationFile> <!-- This is required for NuGet package documentation -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PostSharp" Version="6.10.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\StralsundCityHall_512x512.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
