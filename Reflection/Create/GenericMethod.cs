@@ -3,18 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Reflection;
-using Kontore.Reflection.Invoke;
 
 namespace Kontore.Reflection.Create {
 	public static partial class Create {
-		/// <summary>
-		/// Creates a generic method with the specified parameters.
-		/// You can then use this in <see cref="Invoke"/>
-		/// </summary>
-		/// <param name="sourceType"></param>
-		/// <param name="methodName"></param>
-		/// <param name="typeParameters"></param>
-		/// <returns></returns>
 		public static MethodInfo GenericMethod(Type sourceType, string methodName, params Type[] typeParameters) {
 			if (sourceType == null) throw new ArgumentNullException(nameof(sourceType));
 			if (string.IsNullOrWhiteSpace(methodName)) throw new ArgumentException("The name must not be null or whitespace.", nameof(methodName));

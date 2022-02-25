@@ -13,7 +13,7 @@ namespace Kontore.Reflection.GetSet {
 			/// </summary>
 			/// <param name="enumType">The type of the enum.</param>
 			/// <param name="predicate">A function to test each enum item for a condition.</param>
-			/// <returns>True if all enum items satisfy the <c><paramref name="predicate"/></c>; false otherwise.</returns>
+			/// <returns>True if all enum items satisfy the <paramref name="predicate"/>; false otherwise.</returns>
 			public static bool All(Type enumType, Func<Enum, bool> predicate) {
 				if (enumType == null) throw new ArgumentNullException(nameof(enumType));
 				if (predicate == null) throw new ArgumentNullException(nameof(predicate));
@@ -35,7 +35,7 @@ namespace Kontore.Reflection.GetSet {
 			/// </summary>
 			/// <param name="enumType">The type of the enum.</param>
 			/// <param name="predicate">A function to test each enum item for a condition.</param>
-			/// <returns>True if all enum items satisfy the <c><paramref name="predicate"/></c>; false otherwise.</returns>
+			/// <returns>True if all enum items satisfy the <paramref name="predicate"/>; false otherwise.</returns>
 			public static bool All(Type enumType, Func<int, bool> predicate) {
 				if (enumType == null) throw new ArgumentNullException(nameof(enumType));
 				if (predicate == null) throw new ArgumentNullException(nameof(predicate));
@@ -57,7 +57,7 @@ namespace Kontore.Reflection.GetSet {
 			/// </summary>
 			/// <typeparam name="TEnum">The type of the enum.</typeparam>
 			/// <param name="predicate">A function to test each enum item for a condition.</param>
-			/// <returns>True if all enum items satisfy the <c><paramref name="predicate"/></c>; false otherwise.</returns>
+			/// <returns>True if all enum items satisfy the <paramref name="predicate"/>; false otherwise.</returns>
 			public static bool All<TEnum>(Func<Enum, bool> predicate) where TEnum : Enum {
 				if (predicate == null) throw new ArgumentNullException(nameof(predicate));
 
@@ -77,7 +77,7 @@ namespace Kontore.Reflection.GetSet {
 			/// </summary>
 			/// <typeparam name="TEnum">The type of the enum.</typeparam>
 			/// <param name="predicate">A function to test each enum item for a condition.</param>
-			/// <returns>True if all enum items satisfy the <c><paramref name="predicate"/></c>; false otherwise.</returns>
+			/// <returns>True if all enum items satisfy the <paramref name="predicate"/>; false otherwise.</returns>
 			public static bool All<TEnum>(Func<int, bool> predicate) where TEnum : Enum {
 				return All(typeof(TEnum), predicate);
 			}

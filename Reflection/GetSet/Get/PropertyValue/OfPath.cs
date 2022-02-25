@@ -14,7 +14,7 @@ namespace Kontore.Reflection.GetSet {
 			/// <param name="ignoreAccessibility">Whether to ignore the accesibiity modifier of the property.</param>
 			/// <param name="bindingFlags">The binding flags to use when getting the property.</param>
 			/// <exception cref="ArgumentNullException"><param name="sourceType"/> is null.</exception>
-			/// <exception cref="ArgumentException"><c><paramref name="path"/></c> is null or whitespace.</exception>
+			/// <exception cref="ArgumentException"><paramref name="path"/> is null or whitespace.</exception>
 			/// <exception cref="AmbiguousMatchException">More than one property is found with the specified name and matching the specified binding constraints.</exception>
 			/// <returns>The target property.</returns>
 			private static object OfPath(Type sourceType, object source, string path, bool ignoreAccessibility = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic) {
@@ -65,7 +65,7 @@ namespace Kontore.Reflection.GetSet {
 			/// <param name="ignoreAccessibility">Whether to ignore the accesibiity modifier of the property.</param>
 			/// <param name="bindingFlags">The binding flags to use when getting the property.</param>
 			/// <exception cref="ArgumentNullException"><typeparamref name="T"/> is null.</exception>
-			/// <exception cref="ArgumentException"><c><paramref name="path"/></c> is null or whitespace.</exception>
+			/// <exception cref="ArgumentException"><paramref name="path"/> is null or whitespace.</exception>
 			/// <exception cref="AmbiguousMatchException">More than one property is found with the specified name and matching the specified binding constraints.</exception>
 			/// <returns>The target property.</returns>
 			private static object OfPath<T>(T source, string path, bool ignoreAccessibility = false, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic) {

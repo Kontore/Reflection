@@ -14,12 +14,6 @@ namespace Kontore.Reflection.Invoke {
 		/// <param name="methodName">The name of the method.</param>
 		/// <param name="parameters">The parameters to be passed onto the method.</param>
 		public static void Method(Type sourceType, object source, string methodName, params object[] parameters) {
-			var eq = new EnumQuery<StringComparison>();
-			var a = eq.Add(EnumQuery<StringComparison>.Any(sc => sc.HasFlag(StringComparison.OrdinalIgnoreCase)))
-				.Run(new StringComparison[] { StringComparison.CurrentCulture })
-				.Remove(0)
-				.Result;
-
 			if (sourceType == null) throw new ArgumentNullException(nameof(sourceType));
 			if (string.IsNullOrWhiteSpace(methodName)) throw new ArgumentException("The name must not be null or whitespace.", nameof(methodName));
 			
@@ -44,7 +38,7 @@ namespace Kontore.Reflection.Invoke {
 		/// </summary>
 		/// <typeparam name="T">The type in which the method is declared.</param>
 		/// <param name="source">The instance where the method is located. Use <see langword="null"/> to invoke a static method.</param>
-		/// <param name="method">The method to invoke from the <c><paramref name="source"/></c>.</param>
+		/// <param name="method">The method to invoke from the <paramref name="source"/>.</param>
 		/// <param name="parameters">The parameters to be passed onto the method.</param>
 		public static void Method(object source, MethodInfo method, params object[] parameters) {
 			if (method == null) throw new ArgumentNullException($"The specified method '{method.Name}' does not exist in the type '{method.DeclaringType}'.", nameof(method));
