@@ -11,7 +11,7 @@ namespace Kontore.Reflection.GetSet {
 			/// Sums up all enums in the specified enum.
 			/// </summary>
 			/// <param name="enumType">The type of the enum.</param>
-			/// <returns>The sum of all enum items of the <paramref name="enumType"/>.</returns>
+			/// <returns>The sum of all enum items of the <c><paramref name="enumType"/></c>.</returns>
 			public static int Sum(Type enumType) {
 				if (enumType == null) throw new ArgumentNullException(nameof(enumType));
 				if (!enumType.IsEnum) throw new ArgumentException("Type must be an enum.", nameof(enumType));
