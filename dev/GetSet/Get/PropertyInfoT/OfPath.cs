@@ -9,7 +9,7 @@ namespace Kontore.Reflection.GetSet {
 				if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException("The path must not be null or whitespace.", nameof(path));
 				
 				var fragments = path.Split('.');
-				PropertyInfo current = Of(sourceType, fragments[0], ignoreAccessibility, bindingFlags);
+				var current = Of(sourceType, fragments[0], ignoreAccessibility, bindingFlags);
 
 				for (int i = 1; i < fragments.Length; i++) {
 					current = Of(current.PropertyType, fragments[i], ignoreAccessibility, bindingFlags);

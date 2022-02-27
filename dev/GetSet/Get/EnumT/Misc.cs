@@ -16,7 +16,18 @@ namespace Kontore.Reflection.GetSet {
 				if (enumType == null) throw new ArgumentNullException(nameof(enumType));
 				if (!enumType.IsEnum) throw new ArgumentException("Type must be an enum.", nameof(enumType));
 				
-				return All(enumType, (int e) => (e & (e - 1)) == 0);
+				/*
+				  0100 = 4
+				& 0011 = 3
+				----------
+				  0000 = 0
+
+				  0110 = 5
+				& 0100 = 4
+				----------
+				  0100 = 4
+				*/
+				return All(enumType, e => (e & (e - 1)) == 0);
 			}
 
 			/// <summary>
