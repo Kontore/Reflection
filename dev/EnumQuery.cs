@@ -7,6 +7,7 @@ using System.Reflection;
 namespace Kontore.Reflection {
 	public abstract class ReflectionQuery<T> {
 		public List<T> Result { get; }
+		protected List<T> Data { get; set; }
 		private List<Func<T, bool>> Queries { get; }
 
 		public ReflectionQuery() {
@@ -22,10 +23,13 @@ namespace Kontore.Reflection {
 		}
 
 		protected virtual ReflectionQuery<T> Run(IEnumerable<T> data, bool allQueries = true) {
+			Data.Clear();
+			Data.AddRange(data);
+
 			if (Queries.Count == 0) {
-				Result.AddRange(data);
+				Result.AddRange(Data);
 			} else {
-				Result.AddRange(data.Where(value =>
+				Result.AddRange(Data.Where(value =>
 					allQueries
 						? Queries.All(query => query(value))
 						: Queries.Any(query => query(value))
@@ -66,8 +70,9 @@ namespace Kontore.Reflection {
 		public EnumQuery(IEnumerable<Func<TEnum, bool>> queries) : base(queries) { }
 		public EnumQuery(params Func<TEnum, bool>[] queries) : base(queries) { }
 
-		public ReflectionQuery<TEnum> Run(bool allQueries = true) {
-			return Run(Enum.GetValues(typeof(TEnum)).OfType<TEnum>(), allQueries);
+		public EnumQuery<TEnum> Run(bool allQueries = true) {
+			base.Run(Enum.GetValues(typeof(TEnum)).OfType<TEnum>(), allQueries);
+			return this;
 		}
 
 		public bool Any() => Result.Count > 0;
@@ -90,24 +95,54 @@ namespace Kontore.Reflection {
 		public PropertyInfoQuery(params Func<PropertyInfo, bool>[] queries) : base(queries) { }
 
 		public ReflectionQuery<PropertyInfo> Run<T>(T source, bool allQueries = true) {
-			return Run(typeof(T).GetProperties(), allQueries);
+			base.Run(typeof(T).GetProperties(), allQueries);
+			return this;
 		}
 
-		public PropertyInfo Of(string name) {
-			return Result.First(info => info.Name == name);
+		public PropertyInfo Of(Type sourceType, string name) {
+			return Result.Find(info => info.DeclaringType == sourceType && info.Name == name);
 		}
 
-		public PropertyInfo OfPath(string path) {
+		public PropertyInfo OfPath(Type sourceType, string path) {
 			if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException("The path must not be null or whitespace.", nameof(path));
 
 			var fragments = path.Split('.');
-			var current = Of(fragments[0]);
+			var current = Of(sourceType, fragments[0]);
 
 			for (int i = 1; i < fragments.Length; i++) {
-				current = Of(fragments[i]);
+				current = Of(current.PropertyType, fragments[i]);
 			}
 
 			return current;
+		}
+	}
+
+	public class TypeQuery : ReflectionQuery<Type> {
+		public TypeQuery() : base() { }
+		public TypeQuery(IEnumerable<Func<Type, bool>> queries) : base(queries) { }
+		public TypeQuery(params Func<Type, bool>[] queries) : base(queries) { }
+
+		public TypeQuery Run(IEnumerable<Type> types, bool allQueries = true) {
+			base.Run(types, allQueries);
+			return this;
+		}
+
+		public PropertyInfo GetProperty(string typeName, string path) {
+			if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException("The path must not be null or whitespace.", nameof(path));
+
+			var fragments = path.Split('.');
+			var current = Result.Find(type => type.FullName == typeName).GetProperty(fragments[0]);
+
+			for (int i = 1; i < fragments.Length; i++) {
+				current = current.PropertyType.GetProperty(fragments[i]);
+			}
+
+			return current;
+			//return Result.Find(type => type.FullName == typeName).GetProperty(path);
+		}
+
+		public object GetPropertyValue(string typeName, string name, object source) {
+			return GetProperty(typeName, name).GetValue(source);
 		}
 	}
 
@@ -127,6 +162,8 @@ namespace Kontore.Reflection {
 			query.Add(shortFur);
 			query.Run();
 			query.Sum();
+			var typeQuery = new TypeQuery().Run(new[] { typeof(string) });
+			typeQuery.GetProperty("string", "Length");
 		}
 	}
 }
